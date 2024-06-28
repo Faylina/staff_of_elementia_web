@@ -7,6 +7,7 @@
 
 #---------- IMPORTS -----------#
 
+import streamlit        as st
 from debugging          import debug_functions
 from texts              import gameplay_snippets
 from classes.Game       import Game
@@ -16,8 +17,8 @@ from classes.Witch      import Witch
 
 #---------- INTRO ---------#
 
-print(gameplay_snippets.title)
-print(gameplay_snippets.intro)
+# st.markdown(gameplay_snippets.title)
+st.markdown(gameplay_snippets.intro) 
 
 confirmation = input('\nEnter your response (y = I want to help! / n = No, thanks...):\n')
 confirmation = confirmation.strip().lower()
