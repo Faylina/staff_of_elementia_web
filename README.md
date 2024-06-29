@@ -1,5 +1,6 @@
 # Staff of Elementia
-First project written in Python featuring a text-based, object-oriented adventure game.
+Project written in Python featuring a text-based, object-oriented adventure game. 
+This is the web version.
 
 # ----- Vision for the game ----- #
 
