@@ -16,40 +16,42 @@ from classes.Witch      import Witch
 import requests 
 
 
-def play_game(user_input):
-    #---------- VARIABLES -----#
+def play_game(player_input = None):
+
+    #---------- VARIABLES ----------#
 
     new_texts   = []
     n           = 0
+    input       = player_input
+
+    #---------- FUNCTIONS -----------#
 
     def increment(n):
         n = n + 1
         return n
 
-    #---------- INTRO ---------#
+    #---------- INTRO ---------------#
 
-    new_texts.append(gameplay_snippets.title)
+    #new_texts.append(gameplay_snippets.title)
     new_texts.append(gameplay_snippets.intro)
     new_texts.append('Enter your response (y = I want to help! / n = No, thanks...):')
 
-    new_texts_str = '$'.join(new_texts)
-    requests.post(url='http://localhost:5003/start_game', json={'texts': new_texts_str})
+    if( input ):
+        confirmation    = input[n]
+        n               = increment(n)
 
-    if(len(user_input) != 0 ):
-        confirmation = user_input[n]
-        n = increment(n)
-
-        confirmation = confirmation.strip().lower()
+        confirmation    = confirmation.strip().lower()
         debug_functions.debugVariable('confirmation', confirmation)
 
         if confirmation != 'y':
+            new_texts.append(confirmation)
             new_texts.append('Farewell, traveler. Come back when you are ready to tackle this challenge.')
 
             new_texts_str = '$'.join(new_texts)
             requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})   
     
         else:
-            if(len(user_input) == 5 ):
+            if(len(input) == 5 ):
 
                 #---------- CREATING A PLAYER ---------#
 

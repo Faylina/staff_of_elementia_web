@@ -3,8 +3,8 @@
 #---------------------------------------#
 
 #---------- IMPORTS -----------#
-import inspect
-from debugging.config import DEBUG
+import  inspect
+from    debugging.config import DEBUG
 
 #---------- DEBUG FUNCTIONS ------------#
 
@@ -21,9 +21,9 @@ def debugClass(self) -> None:
 def debugVariable(variable_name: str, variable) -> None:
     """ DEBUG: 'Variable name' = variable """
     if DEBUG:
-        print(f"\nDEBUG: '{variable_name}' = {variable}")
+        print(f"\nDEBUG: '{variable_name}' = {variable}\n")
 
 def debugProcess(process: str) -> None:
     """ DEBUG: 'Process' has been started."""
     if DEBUG:
-        print(f"\nDEBUG: '{process}' has been started.")
+        print(f"\nDEBUG: '{process}' has been started.\n")
