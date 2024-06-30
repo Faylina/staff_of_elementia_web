@@ -5,14 +5,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Staff of Elementia</title>
 	<link rel="stylesheet" href="../static/main.css">
+	<script src="../static/process_input.js" defer></script>
 </head>
 <body>
 
-	<div class="text"></div>
+	<div class="text">
+		{% for text in texts %}
+			{{ text }}
+		{% endfor %}
+	</div>
 
-	<form class="input" action="" method="POST">
-		<input type="text" placeholder="Make your decision...">
+	<form class="input" method="POST">
+		<label for="player-input">Press Enter to submit:</label>
+		<input type="text" name="player-input" id="player-input" placeholder="Make your decision...">
 	</form>
-	
 </body>
 </html>
