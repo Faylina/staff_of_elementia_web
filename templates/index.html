@@ -4,28 +4,41 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Staff of Elementia</title>
+		<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+
+		<!-- --------------- FONT ------------------- -->
+
+		<link href="https://api.fontshare.com/v2/css?f[]=pally@400,500,1&display=swap" rel="stylesheet"> 
 		
+		<!-- --------------- SOCKETIO --------------- -->
+
 		<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
 		<script src="{{url_for('static', filename='js/process_input.js')}}" defer></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 	</head>
 	<body>
 
-		<!-- --------------- TEXT BOX --------------- -->
+		<div class="overlay">
 
-		<div class="text">
-			{% for text in texts %}
-				<p>{{ text }}</p>
-				<br>
-			{% endfor %}
+			<img src="../static/images/logo.png" alt="a witch's hat and a mysterious staff with a blue, glowing stone">
+
+			<!-- --------------- TEXT BOX --------------- -->
+
+			<div class="text">
+				{% for text in texts %}
+					<p>{{ text }}</p>
+					<br>
+				{% endfor %}
+			</div>
+
+			<!-- --------------- INPUT ------------------- -->
+
+			<form class="input" method="POST">
+				<label for="player-input">Press Enter to submit:</label>
+				<input type="text" name="player-input" id="player-input" placeholder="Make your decision...">
+			</form>
+
 		</div>
-
-		<!-- --------------- INPUT ------------------- -->
-
-		<form class="input" method="POST">
-			<label for="player-input">Press Enter to submit:</label>
-			<input type="text" name="player-input" id="player-input" placeholder="Make your decision...">
-		</form>
 
 	</body>
 </html>

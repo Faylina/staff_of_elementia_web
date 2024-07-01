@@ -7,23 +7,56 @@
 body {
 	width: 100vw;
 	height: 100vh;
+	background-image: url('../images/background_blurred.png');
+	color: #392F2F;
+	font-family: 'Pally', sans-serif;
+	font-size: 21px;
+	font-weight: 500;
+}
+
+.overlay {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.2);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
+
+/************ LOGO ****************/
+
+img {
+	width: 40%;
+	margin-top: 40px;
+}
+
+
 /************ TEXT BOX ************/
 
 .text {
 	width: 40%;
-	height: 75%;
-	border: 2px solid grey;
+	height: 65%;
+	border: 1px solid grey;
 	overflow-y: auto;
-	margin: 40px 0;
+	margin: 20px 0;
+	padding: 20px;
 	border-radius: 10px;
+	background-color: rgba(183, 202, 194, 0.7);
+	scrollbar-color: #468c77 rgba(167, 195, 183, 0.5);
+    scrollbar-width: thin;
 }
 
+
 /************ INPUT ************/
+
+label {
+	color: #b7cac2;
+	padding: 5px 10px;
+	font-weight: normal;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
 
 .input {
 	width: 40%;
@@ -31,8 +64,42 @@ body {
 
 .input input {
 	width: 100%;
-	height: 40px;
-	border-radius: 20px;
-	border: 2px solid grey;
-	padding: 0 20px;
+	height: 50px;
+	border-radius: 10px;
+	border: 1px solid grey;
+	padding: 0px 20px;
+	background-color: rgba(183, 202, 194, 0.7);
+	font-family: 'Pally', sans-serif;
+	font-size: 19px;
+	margin-bottom: 40px;
+}
+
+::placeholder {
+	color: #30221c;
+	opacity: 0.6;
+}
+
+::-ms-input-placeholder {
+	color: rgb(48, 34, 28, 0.6);
+}
+
+
+/************ SCROLLBAR ************/
+
+.text::-webkit-scrollbar {
+    width: 10px;
+}
+   
+.text::-webkit-scrollbar-track {
+    background-color: rgba(167, 195, 183, 0.5);
+    border-radius: 5px;
+}
+   
+.text::-webkit-scrollbar-thumb {
+    background-color: #468c77;
+    border-radius: 5px;
+}
+   
+.text::-webkit-scrollbar-thumb:hover {
+    background-color: #3A7563;
 }
