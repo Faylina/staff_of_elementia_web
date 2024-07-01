@@ -35,7 +35,8 @@ def index():
 		try:
 			debug_functions.debugProcess('Starting the game...')
 
-			play_game()
+
+			play_game(player_input)
 
 			return render_template('index.html', texts=texts)
 		except:
@@ -82,20 +83,21 @@ def input(data):
 # Connect to SocketIO
 @socketio.on("connect")
 def connect(auth):
+	print(player_input)
 	join_room(index)
-	debug_functions.debugProcess('Connected to SocketIO')
+	debug_functions.debugProcess('Connecting to SocketIO')
 
 
 # Disconnect from SocketIO
 @socketio.on("disconnect")
 def connect():
+
 	leave_room(index)
-	debug_functions.debugProcess('Disconnected to SocketIO')
+	debug_functions.debugProcess('Disconnecting from SocketIO')
 
 	# prepare the game for restart by clearing player input from game
-	player_input = []
+	player_input.clear()
 	play_game(player_input)
-
 
 #------------ START SERVER ----------------#
 

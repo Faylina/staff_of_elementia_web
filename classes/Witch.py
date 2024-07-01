@@ -15,6 +15,7 @@ from classes.Ingredient import Ingredient
 from classes.Spell      import Spell
 from classes.Potion     import Potion
 from classes.Forest     import Forest
+import requests
 
 
 #---------- CLASS -----------#
@@ -310,21 +311,21 @@ class Witch:
     # witch_art
     def set_art(self) -> None:
         """Creates the image of a witch."""
-        witch_art =  '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⢠⣿'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡆'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡾⣼⣿⡇'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⢣⣿⣿⡇'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡼⠏⣼⣿⣿⣿'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⣿⣿⢹⣿⢻⣿⣿⣿⣦⣄'
-        witch_art += '\n⠀⣠⣤⣄⠀⠀⠀⠀⠀⠀⠀⣸⠟⠛⠿⠶⢾⣿⣿⣿⣿⡿⠗'
-        witch_art += '\n⠘⢿⣿⣿⣿⣦⡀⠀⠀⠀⢀⣿⠐⡀⠀⠰⠘⣿⣿⣿⣿⡄'
-        witch_art += '\n⠀⠀⠈⠉⠛⠻⠿⣶⣶⠄⢸⣿⣧⣄⣀⠀⢀⣿⣿⣿⣿⡇'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠈⠁⠉⢞⣿⣿⣿⣧⣾⣶⣿⣿⣿⠿⠟'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⣿⣿⣿⣿⣿⡿⠀'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣷⣼⢄⡀'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠧⠈⠁'
-        witch_art += '\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠈⠉'
+        witch_art =  '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⢠⣿'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡆'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡾⣼⣿⡇'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⢣⣿⣿⡇'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡼⠏⣼⣿⣿⣿'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⣿⣿⢹⣿⢻⣿⣿⣿⣦⣄'
+        witch_art += '⠀⣠⣤⣄⠀⠀⠀⠀⠀⠀⠀⣸⠟⠛⠿⠶⢾⣿⣿⣿⣿⡿⠗'
+        witch_art += '⠘⢿⣿⣿⣿⣦⡀⠀⠀⠀⢀⣿⠐⡀⠀⠰⠘⣿⣿⣿⣿⡄'
+        witch_art += '⠀⠀⠈⠉⠛⠻⠿⣶⣶⠄⢸⣿⣧⣄⣀⠀⢀⣿⣿⣿⣿⡇'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠈⠁⠉⢞⣿⣿⣿⣧⣾⣶⣿⣿⣿⠿⠟'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⣿⣿⣿⣿⣿⡿⠀'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣷⣼⢄⡀'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⠧⠈⠁'
+        witch_art += '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠈⠉'
         self.__witch_art = witch_art
 
     def get_art(self) -> str:
@@ -376,48 +377,112 @@ class Witch:
 
 
     @staticmethod
-    def choosePet() -> Dog or Cat or None:
+    def choosePet(new_texts_index, input_index, n_index) -> Dog or Cat or None:
         """Allows the player to create and customize the witch's pet."""
-        pet_choice = input('\nWhat kind of pet would you like to adopt? (cat/dog)\n')
-        pet_choice = pet_choice.strip().lower()
-        debug_functions.debugVariable('pet_choice', pet_choice)
 
-        pet_sex = input('\nWhat would you like the sex of your pet to be? (male/female)\n')
-        debug_functions.debugVariable('pet_sex', pet_sex)
+        new_texts   = new_texts_index
+        input       = input_index
+        n           = n_index
 
-        pet_name = input('\nWhat would you like to name your pet?\n')
-        debug_functions.debugVariable('pet_name', pet_name)
+        def increment(n):
+            n = n + 1
+            return n
+        
+        new_texts.append('What kind of pet would you like to adopt? (cat/dog)')
 
-        pet_age = input('\nHow old would you prefer your pet to be?\n')
-        debug_functions.debugVariable('pet_age', pet_age)
+        new_texts_str = '$'.join(new_texts)
+        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
 
-        pet_color = input('\nWhat color would you prefer your pet to be?\n')
-        debug_functions.debugVariable('pet_color', pet_color)
+        if( len(input) > n ):
 
-        # creating a pet
-        if pet_choice == 'cat':
-            # name = None, age = None, color = None, sex = None
-            pet = Cat(pet_name, pet_age, pet_color, pet_sex)
-            debug_functions.debugVariable('pet.look()', pet.look())
+            pet_choice  = input[n]      
+            n           = increment(n)
 
-        elif pet_choice == 'dog':
-            # name = None, age = None, color = None, sex = None
-            pet = Dog(pet_name, pet_age, pet_color, pet_sex)
-            debug_functions.debugVariable('pet.look()', pet.look())
+            pet_choice = pet_choice.strip().lower()
+            debug_functions.debugVariable('pet_choice', pet_choice)
 
-        else:
-            print('There are no pets of this kind for adoption.')
-            pet = None
+            new_texts.append('Your answer: ' + pet_choice)
+            new_texts.append('What would you like the sex of your pet to be? (male/female)')
 
-        if pet is not None:
-            if (    pet.get_name()  is None or
-                    pet.get_age()   is None or
-                    pet.get_color() is None or
-                    pet.get_sex()   is None):
+            new_texts_str = '$'.join(new_texts)
+            requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
 
-                pet = None
+            if( len(input) > n ):
 
-        return pet
+                pet_sex = input[n]      
+                n       = increment(n)
+
+                pet_sex = pet_sex.strip().lower()
+                debug_functions.debugVariable('pet_sex', pet_sex)
+
+                new_texts.append('Your answer: ' + pet_sex)
+                new_texts.append('What would you like to name your pet?')
+
+                new_texts_str = '$'.join(new_texts)
+                requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+
+                if( len(input) > n ):
+
+                    pet_name = input[n]      
+                    n        = increment(n)
+
+                    pet_name = pet_name.strip()
+                    debug_functions.debugVariable('pet_name', pet_name)
+
+                    new_texts.append('Your answer: ' + pet_name)
+                    new_texts.append('How old would you prefer your pet to be?')
+
+                    new_texts_str = '$'.join(new_texts)
+                    requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+
+                    if( len(input) > n ):
+
+                        pet_age = input[n]      
+                        n       = increment(n)
+
+                        pet_age = pet_age.strip()
+                        debug_functions.debugVariable('pet_age', pet_age)
+
+                        new_texts.append('Your answer: ' + pet_age)
+                        new_texts.append('What color would you prefer your pet to be?')
+
+                        new_texts_str = '$'.join(new_texts)
+                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+
+                        if( len(input) > n ):
+
+                            pet_color = input[n]      
+                            n         = increment(n)
+
+                            pet_color = pet_color.strip()
+                            debug_functions.debugVariable('pet_color', pet_color)
+
+                            new_texts.append('Your answer: ' + pet_color)
+
+                            # creating a pet
+                            if pet_choice == 'cat':
+                                # name = None, age = None, color = None, sex = None
+                                pet = Cat(pet_name, pet_age, pet_color, pet_sex)
+                                debug_functions.debugVariable('pet.look()', pet.look())
+
+                            elif pet_choice == 'dog':
+                                # name = None, age = None, color = None, sex = None
+                                pet = Dog(pet_name, pet_age, pet_color, pet_sex)
+                                debug_functions.debugVariable('pet.look()', pet.look())
+
+                            else:
+                                new_texts.append('There are no pets of this kind for adoption.')
+                                pet = None
+
+                            if pet is not None:
+                                if (    pet.get_name()  is None or
+                                        pet.get_age()   is None or
+                                        pet.get_color() is None or
+                                        pet.get_sex()   is None):
+
+                                    pet = None
+
+                            return [new_texts, input, n, pet]
 
 
     def adoptPet(self) -> str:

@@ -64,6 +64,8 @@ const init = () => {
 			let new_paragraph 		= `<p class="text-snippet"> ${text} </p><br>`;
 			textContainer.innerHTML += new_paragraph
 		}
+
+		textContainer.scrollTop = textContainer.scrollHeight;
 	}
 
 
