@@ -4,17 +4,22 @@
 
 #------------ IMPORTS ------------------#
 
-from flask 			import Flask, render_template, request, jsonify
-from flask_socketio import SocketIO, join_room, leave_room
+from flask 				import Flask, render_template, request, jsonify, Response
+from Cryptodome.Cipher 	import AES
+from flask_socketio 	import SocketIO, join_room, leave_room
+import binascii
+
 from index			import play_game
 from texts  		import gameplay_snippets
 from keys.key 		import key
 from debugging      import debug_functions
 
+
 #------------ VARIABLES ----------------#
 app 						= Flask(__name__)
 app.config["SECRET_KEY"] 	= key
 socketio 					= SocketIO(app, logger=True, engineio_logger=True)
+socketio.init_app(app, cors_allowed_origins="*")
 
 texts 						= []
 player_input 				= []
@@ -61,6 +66,66 @@ def update_game():
 			return jsonify({'message': 'Update was successful.'})
 		except:
 			print('Updating not possible...')
+
+
+# >>> fetches and decrypts cookie for authentication
+
+@app.route('/getCookieFlask', methods=['GET'])
+def get_cookie():
+	debug_functions.debugProcess('Getting cookie...')
+
+	cookie_value = request.cookies.get('codingsorceressbridge')
+ 
+	if not cookie_value:
+		return "Cookie not found", 404
+		
+	cookie_data 	= binascii.unhexlify(cookie_value.split('%3A%3A')[0])
+	shared_secret 	= binascii.unhexlify(cookie_value.split('%3A%3A')[1])
+	
+	cipher 			= AES.new(shared_secret, AES.MODE_CBC, iv=cookie_data[:16])
+	decrypted_data 	= cipher.decrypt(cookie_data[16:])
+
+	decrypted_cookie = decrypted_data.decode('utf-8').strip()
+	 
+	return decrypted_cookie
+
+
+# >>> deletes the cookie if its invalid
+
+@app.route('/deleteCookieFlask', methods=['DELETE'])
+def delete_cookie():
+	debug_functions.debugProcess('Deleting cookie...')
+
+	cookies = request.headers.get('Cookie')
+	
+	try:
+		cookies = 'codingsorceressbridge=; Max-Age=0; Path=/;'
+
+	except Exception as e:
+		print(e)
+	
+	response = Response()
+	response.headers['Set-Cookie'] = cookies
+	return response
+
+
+# >>> fetches the IP of the current user
+
+@app.route('/getIPFlask', methods=['GET'])
+def get_ip():
+	debug_functions.debugProcess('Getting IP...')
+
+	forwarded = request.headers.getlist("X-Forwarded-For")
+	
+	if forwarded:
+		ip = forwarded[0].split(",")[0]
+	
+	else:
+		ip = request.remote_addr
+	
+	debug_functions.debugVariable('ip', len(ip))
+	
+	return str(ip)
 
 
 #------------ SOCKET IO EVENT LISTENERS ----------------#

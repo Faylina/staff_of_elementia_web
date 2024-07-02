@@ -10,17 +10,29 @@
 
 		<link href="https://api.fontshare.com/v2/css?f[]=pally@400,500,1&display=swap" rel="stylesheet"> 
 		
-		<!-- --------------- SOCKETIO --------------- -->
+		<!-- --------------- CSS & JS --------------- -->
 
 		<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
-		<script src="{{url_for('static', filename='js/process_input.js')}}" defer></script>
+		<script src="{{url_for('static', filename='js/checkLogin.js')}}" async></script>
+		<script src="{{url_for('static', filename='js/processInput.js')}}" defer></script>
+
+		<!-- --------------- SOCKETIO --------------- -->
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 	</head>
 	<body>
 
 		<div class="overlay">
 
-			<img src="../static/images/logo.png" alt="a witch's hat and a mysterious staff with a blue, glowing stone">
+			<!-- -------------- LINK TO THE CODING SORCERESS BEGIN -------------- -->
+         
+			<div class="coding-sorceress">
+				<a href="../../portfolio.php#projects"><< Go back to The Coding Sorceress</a>
+			</div>
+	
+			<!-- --------------- LOGO ------------------- -->
+
+			<img src="{{url_for('static', filename='images/logo.png')}}" alt="a witch's hat and a mysterious staff with a blue, glowing stone">
 
 			<!-- --------------- TEXT BOX --------------- -->
 
