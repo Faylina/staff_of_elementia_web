@@ -43,22 +43,20 @@ def play_game(player_input):
         confirmation    = confirmation.strip().lower()
         debug_functions.debugVariable('confirmation', confirmation)
 
-        new_texts.append('Your answer: ' + confirmation)
+        new_texts.append('Your answer: ' + confirmation) 
 
         if confirmation != 'y':
             new_texts.append('Farewell, traveler. Come back when you are ready to tackle this challenge.')
-
             new_texts_str = '$'.join(new_texts)
-            requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})   
+            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
     
         else:
  
             #---------- CREATING A PLAYER ---------#
 
             new_texts.append('Then state your name, brave traveler!')
-
             new_texts_str = '$'.join(new_texts)
-            requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
             if( len(input) > n ):
 
@@ -76,12 +74,14 @@ def play_game(player_input):
 
                 # case: player has not played before
                 greeting = player.greetPlayer()
-                new_texts.append('Your answer: ' + player_name)
-                new_texts.append(greeting)
-                new_texts.append('Are you ready to start a new adventure? (y/n)')
 
+                new_texts.append('Your answer: ' + player_name)  
+
+                new_texts.append(greeting) 
+
+                new_texts.append('Are you ready to start a new adventure? (y/n)')
                 new_texts_str = '$'.join(new_texts)
-                requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str}) 
+                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
 
                 if( len(input) > n ):
 
@@ -91,14 +91,13 @@ def play_game(player_input):
                     new_game_confirmation = new_game_confirmation.strip().lower()
                     debug_functions.debugVariable('new_game_confirmation', new_game_confirmation)
 
-                    new_texts.append('Your answer: ' + new_game_confirmation)
+                    new_texts.append('Your answer: ' + new_game_confirmation) 
 
                     if new_game_confirmation != 'y':
 
                         new_texts.append(f"Farewell, {player_name}. Come back when you're ready to tackle this challenge.")
-                        
                         new_texts_str = '$'.join(new_texts)
-                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                     else:
 
@@ -121,11 +120,11 @@ def play_game(player_input):
                         debug_functions.debugProcess('Creating the witch and her pet...')
 
                         # player customization of the witch and her pet
-                        new_texts.append("Let's transform you into a witch!")
-                        new_texts.append("What would you like to be called as a witch?")
+                        new_texts.append("Let's transform you into a witch!")  
 
+                        new_texts.append("What would you like to be called as a witch?")
                         new_texts_str = '$'.join(new_texts)
-                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
 
                         if( len(input) > n ):
                         
@@ -134,10 +133,10 @@ def play_game(player_input):
                             debug_functions.debugVariable('witch_name', witch_name)
 
                             new_texts.append('Your answer: ' + witch_name)
-                            new_texts.append('Would you like to adopt a pet? (y/n)')
 
+                            new_texts.append('Would you like to adopt a pet? (y/n)')
                             new_texts_str = '$'.join(new_texts)
-                            requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                             if( len(input) > n ):
 
@@ -183,7 +182,7 @@ def play_game(player_input):
                                 witch = Witch(forest, pet, witch_name)
                                 debug_functions.debugVariable('witch.get_art()', witch.get_art())
 
-                                new_texts.append(f'\nCongratulations! You were reborn as a witch named {witch.get_name()}!')
+                                new_texts.append(f'Congratulations! You were reborn as a witch named {witch.get_name()}!') 
                                 # new_texts.append(witch.get_art())
 
                                 if witch.get_familiar() is not None:
@@ -197,9 +196,8 @@ def play_game(player_input):
                                 game.startNewGame()
 
                                 new_texts.append('Would you like to enter the forest now? (y/n)')
-
                                 new_texts_str = '$'.join(new_texts)
-                                requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                                 if( len(input) > n ):
 
@@ -207,30 +205,28 @@ def play_game(player_input):
                                     n                   = increment(n)
                                     forest_confirmation = forest_confirmation.strip().lower()
 
-                                    new_texts.append('Your answer: ' + forest_confirmation)
+                                    new_texts.append('Your answer: ' + forest_confirmation)  
 
                                     if forest_confirmation != 'y':
 
                                         new_texts.append(f"Goodbye, {player_name}. Come back when you're ready to tackle this challenge.")
-
                                         new_texts_str = '$'.join(new_texts)
-                                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
                         
                                     else:
 
                                         # ---------- ENTERING THE FOREST ---------#
 
                                         # let witch enter the start point
-                                        new_texts.append(witch.get_forest().enterCell())
+                                        new_texts.append(witch.get_forest().enterCell())  
 
                                         # ---------- START INTERACTION LOOP ---------#
 
                                         while not game.get_game_over():
 
                                             new_texts.append('Enter any letter to see your current options.')
-
                                             new_texts_str = '$'.join(new_texts)
-                                            requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                                             if( len(input) > n ):
 
@@ -251,12 +247,11 @@ def play_game(player_input):
                                                     new_texts.append('This is what you could do now:')
                                                   
                                                     for string in options_no_pet:
-                                                        new_texts.append(string)
+                                                        new_texts.append(string)  
                                                     
                                                     new_texts.append('Choose wisely: ')
-
                                                     new_texts_str = '$'.join(new_texts)
-                                                    requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                                    requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
 
                                                     if( len(input) > n ):
 
@@ -264,30 +259,26 @@ def play_game(player_input):
                                                         n      = increment(n)
                                                         action = action.strip().lower()
 
-                                                        new_texts.append('Your answer: ' + action)
-
-                                                        new_texts_str = '$'.join(new_texts)
-                                                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                                        new_texts.append('Your answer: ' + action) 
 
                                                     else: 
                                                         break
                                                 else:
-                                                    new_texts.append('This is what you could do now:')
+                                                    new_texts.append('This is what you could do now:') 
 
                                                     for string in options_pet:
-                                                        new_texts.append(string)
+                                                        new_texts.append(string)  
 
                                                     new_texts.append('Choose wisely: ')
-
                                                     new_texts_str = '$'.join(new_texts)
-                                                    requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                                    requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                                                     if( len(input) > n ):   
                                                         action = input[n]      
                                                         n      = increment(n)
                                                         action = action.strip().lower()
 
-                                                        new_texts.append('Your answer: ' + action)
+                                                        new_texts.append('Your answer: ' + action) 
                                                     
                                                     else:
                                                         break
@@ -311,23 +302,21 @@ def play_game(player_input):
                                                         game.quitGame()
 
                                                         new_texts.append(f"Goodbye, {player_name}. Come back when you're ready to continue.")
-
                                                         new_texts_str = '$'.join(new_texts)
-                                                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                                                     # ---------- PRESENT PET OPTIONS ---------#
 
                                                     elif method_name == 'interactWithPet':
 
-                                                        new_texts.append(f'\nHow would you like to interact with {witch.get_familiar().get_name()}?')
+                                                        new_texts.append(f'How would you like to interact with {witch.get_familiar().get_name()}?') 
 
                                                         for string in options_for_pet_interaction:
                                                             new_texts.append(string)
                                                         
                                                         new_texts.append('Choose interaction: ')
-
                                                         new_texts_str = '$'.join(new_texts)
-                                                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                                                         if( len(input) > n ):
 
@@ -335,7 +324,7 @@ def play_game(player_input):
                                                             n           = increment(n)
 
                                                             interaction = interaction.strip().lower()
-                                                            new_texts.append(interaction)
+                                                            new_texts.append('Your answer: ' + interaction)
 
                                                             # ---------- EXECUTE PET INTERACTION ---------#
 
@@ -347,9 +336,8 @@ def play_game(player_input):
                                                                 game.quitGame()
 
                                                                 new_texts.append(f"Goodbye, {player_name}. Come back when you're ready to continue.")
-                                                                
                                                                 new_texts_str = '$'.join(new_texts)
-                                                                requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                                                                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                                                             # ---------- PET INTERACTIONS ---------#
                                                             else:
@@ -357,7 +345,7 @@ def play_game(player_input):
                                                                 method = method_reference(method)
 
                                                                 # call the method
-                                                                new_texts.append(method())
+                                                                new_texts.append(method())  
 
                                                         else:
                                                             break
@@ -369,10 +357,10 @@ def play_game(player_input):
 
                                                         # call the method
                                                         if args is None:
-                                                            new_texts.append(method())
+                                                            new_texts.append(method()) 
   
                                                         else:
-                                                            new_texts.append(method(args))
+                                                            new_texts.append(method(args))  
                                                             
                                                 except KeyError:
                                                     new_texts.append('This is not a valid action.')

@@ -141,11 +141,11 @@ class Pet(ABC):
     def adoptPet(self) -> str:
         """Congratulates the player for adopting their new pet."""
         debug_functions.debugMethod(self)
-        adoption_certificate = "You've welcomed a new family member into your life!"
-        adoption_certificate += "\nThis little friend, is now yours forever,"
-        adoption_certificate += "\nsharing the adventure and growing with you every step of the way. \nCongrats!"
-        adoption_certificate += (f"\n{self.get_name()} is {self.get_sex()} and is currently {self.get_age()} years old."
-                                 f"\n{self.get_pronoun().title()} fur is shiny {self.get_color()}. "
+        adoption_certificate = "You've welcomed a new family member into your life! "
+        adoption_certificate += "This little friend, is now yours forever, "
+        adoption_certificate += "sharing the adventure and growing with you every step of the way. Congrats! "
+        adoption_certificate += (f"{self.get_name()} is {self.get_sex()} and is currently {self.get_age()} years old. "
+                                 f"{self.get_pronoun().title()} fur is shiny {self.get_color()}. "
                                  f"Enjoy your time together!")
         return adoption_certificate
 

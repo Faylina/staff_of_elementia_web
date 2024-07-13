@@ -6,8 +6,8 @@
 
 from flask 				import Flask, render_template, request, jsonify, Response
 from Cryptodome.Cipher 	import AES
-from flask_socketio 	import SocketIO, join_room, leave_room
 import binascii
+import time
 
 from index			import play_game
 from texts  		import gameplay_snippets
@@ -16,18 +16,27 @@ from debugging      import debug_functions
 
 
 #------------ VARIABLES ----------------#
+
 app 						= Flask(__name__)
 app.config["SECRET_KEY"] 	= key
-socketio 					= SocketIO(app, logger=True, engineio_logger=True)
-socketio.init_app(app, cors_allowed_origins="*")
 
-texts 						= []
+texts 						= ['empty']
+old_texts 					= ['empty']
 player_input 				= []
 
-#------------ INTRODUCTION ----------------#
 
-texts.append(gameplay_snippets.intro)
-texts.append('Enter your response (y = I want to help! / n = No, thanks...):')
+#------------ FUNCTIONS ----------------#
+
+def check_for_update():
+	# debug_functions.debugProcess('Checking for update...')
+
+	index_old = len(old_texts) - 1
+	index_new = len(texts) - 1
+
+	if old_texts[index_old] is not texts[index_new]:
+		return True
+	else:
+		return False
 
 
 #------------ FLASK ROUTES ----------------#
@@ -36,6 +45,21 @@ texts.append('Enter your response (y = I want to help! / n = No, thanks...):')
 
 @app.route('/', methods=['GET'])
 def index():
+
+	# Reset variables for a new game
+
+	texts.clear()
+	texts.append('empty')
+
+	old_texts.clear()
+	old_texts.append('empty')
+
+	player_input.clear()
+
+	intro_texts = []
+	intro_texts.append(gameplay_snippets.intro)
+	intro_texts.append('Enter your response (y = I want to help! / n = No, thanks...):')
+
 	if request.method == 'GET':
 		try:
 			debug_functions.debugProcess('Starting the game...')
@@ -43,29 +67,93 @@ def index():
 
 			play_game(player_input)
 
-			return render_template('index.html', texts=texts)
+			return render_template('index.html', texts=intro_texts)
 		except:
 			print('Homepage could not be loaded...')
 
 
-# >>> pushes game updates to socketio to update the frontend
+# >>> receives user input and passes it to the game script
 
-@app.route('/update_game', methods=['PUT'])
-def update_game():
+@app.route('/input', methods=['POST'])
+def input():
+
+	if request.method == 'POST':
+		try:
+			debug_functions.debugProcess('Processing input...')
+
+			print(player_input)
+
+			# add user input to game
+			player_input.append(request.data.decode("utf-8"))
+			debug_functions.debugVariable('player_input', player_input)
+
+			print(player_input)
+
+			# play game with the added user input
+			play_game(player_input)
+
+			return jsonify({'message': 'User input has been passed to game script.'})
+		
+		except:
+			print('User input could not be passed to the game...')
+
+
+# >>> receives new text from game script
+
+@app.route('/receive_text', methods=['PUT'])
+def receive_text():
+
 	if request.method == 'PUT':
 		try:
-			debug_functions.debugProcess('Updating game...')
+			# time.sleep(0.2)
 
-			texts_str 	= request.json['texts']
-			texts 		= texts_str.split('$')
+			debug_functions.debugProcess('Adding text...')
+
+			texts_string = request.json['texts']
+			texts.append(texts_string)
 
 			debug_functions.debugVariable('texts', texts)
 
-			socketio.emit('update', {'texts': texts})
-
-			return jsonify({'message': 'Update was successful.'})
+			return jsonify({'message': 'New texts received from game script.'})
+		
 		except:
-			print('Updating not possible...')
+			print('New text has not been received...')
+
+
+# >>> pushes game updates via SSE to update the frontend
+
+@app.route('/update_game', methods=['GET'])
+def update_game():
+
+	if request.method == 'GET':
+		try:
+
+			debug_functions.debugProcess('Updating game...')
+
+			def fetch_texts():
+				
+				# keep SSE route active
+				while True:
+					if check_for_update() == True:
+
+						# find the latest text
+						index = len(texts) - 1
+
+						# update comparison variable for update checks
+						old_texts.append(texts[index])
+
+						# send latest text to frontend
+						yield f"event: message\ndata: {texts[index]}\n\n"
+					else:
+						# debug_functions.debugProcess('No update...')
+						placeholder = 1
+
+					# time.sleep(0.1)
+			
+			return Response(fetch_texts(), mimetype="text/event-stream")
+		
+		except:
+			print('Update could not be sent to frontend...')
 
 
 # >>> fetches and decrypts cookie for authentication
@@ -128,44 +216,8 @@ def get_ip():
 	return str(ip)
 
 
-#------------ SOCKET IO EVENT LISTENERS ----------------#
-
-# receives player input from frontend, processes it and 
-# sends it to the game
-
-@socketio.on('input')
-def input(data):
-	debug_functions.debugProcess('Processing input...')
-
-	# add user input to game
-	player_input.append(data['data'])
-	debug_functions.debugVariable('player_input', player_input)
-
-	# play game with additional user input
-	play_game(player_input)
-
-
-# Connect to SocketIO
-@socketio.on("connect")
-def connect(auth):
-	print(player_input)
-	join_room(index)
-	debug_functions.debugProcess('Connecting to SocketIO')
-
-
-# Disconnect from SocketIO
-@socketio.on("disconnect")
-def connect():
-
-	leave_room(index)
-	debug_functions.debugProcess('Disconnecting from SocketIO')
-
-	# prepare the game for restart by clearing player input from game
-	player_input.clear()
-	play_game(player_input)
-
 #------------ START SERVER ----------------#
 
 if __name__ == "__main__":
-	socketio.run(app, port=5003, debug=True)
+	app.run(host="127.0.0.1", port=5003, debug=True)
 

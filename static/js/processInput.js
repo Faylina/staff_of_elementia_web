@@ -4,8 +4,8 @@ const init = () => {
 
 	/************* VARIABLES *************/
 	
-	let socketio 	= io();
 	const inputForm = document.querySelector('.input');
+	let sse 		= new EventSource("/update_game");
 
 
 	/************* FUNCTIONS *************/
@@ -25,18 +25,25 @@ const init = () => {
 	const sendInput = (event) => {
 		event.preventDefault();
 
-		// extract the user input
-		const userInput = event.target[0].value;
+		const input = event.target[0].value;
+		// console.log(input)
 
-		// check whether it has content, if not abort
-		if(userInput == '') return;
+		fetch('/input', {
+			method: 'post', 
+			headers: { "Content-Type": "application/text" },
+			body: input
+		}).then(
+			resp => resp.json()
+		).then(
+			data => {
+				//console.log(data);
+			}
+		).catch(
+			console.warn
+		)
 
-		// send user input to the server side
-		socketio.emit('input', {data: userInput});
+		event.target.reset();
 
-		// clear the field in the form
-		const inputField = document.querySelector('#player-input');
-		inputField.value = '';
 	}
 
 
@@ -55,16 +62,26 @@ const init = () => {
 
 	const updateText = (texts) => {
 
+		console.log('Updating client...');
+
+		// get data from server and transform from string to array
+		const textsString = texts.data;
+		// console.log(textsString);
+
+		const textsArray = textsString.split('$');
+		// console.log(textsArray);
+
 		// target and clear the text box
 		const textContainer 	= document.querySelector('.text');
 		textContainer.innerHTML = '';
 
 		// loop over texts to display them in the text box
-		for(const text of texts['texts']) {
+		for(const text of textsArray) {
 			let new_paragraph 		= `<p class="text-snippet"> ${text} </p><br>`;
 			textContainer.innerHTML += new_paragraph
 		}
 
+		// scroll to bottom of text box
 		textContainer.scrollTop = textContainer.scrollHeight;
 	}
 
@@ -72,10 +89,10 @@ const init = () => {
 	/************* EVENT LISTENERS *************/
 
 	inputForm.addEventListener('submit', sendInput);
+	sse.addEventListener('open', () => {console.log('Connected')});
+	sse.addEventListener('message', message => {updateText(message)});
+	sse.addEventListener('error', error => {console.log("An error occurred while attempting to connect.")});
 
-	socketio.on('update', (texts) => {
-		updateText(texts);
-	});
 }
 
 init();

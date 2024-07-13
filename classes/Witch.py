@@ -389,9 +389,8 @@ class Witch:
             return n
         
         new_texts.append('What kind of pet would you like to adopt? (cat/dog)')
-
         new_texts_str = '$'.join(new_texts)
-        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
         if( len(input) > n ):
 
@@ -401,11 +400,11 @@ class Witch:
             pet_choice = pet_choice.strip().lower()
             debug_functions.debugVariable('pet_choice', pet_choice)
 
-            new_texts.append('Your answer: ' + pet_choice)
-            new_texts.append('What would you like the sex of your pet to be? (male/female)')
+            new_texts.append('Your answer: ' + pet_choice) 
 
+            new_texts.append('What would you like the sex of your pet to be? (male/female)')
             new_texts_str = '$'.join(new_texts)
-            requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
             if( len(input) > n ):
 
@@ -416,10 +415,10 @@ class Witch:
                 debug_functions.debugVariable('pet_sex', pet_sex)
 
                 new_texts.append('Your answer: ' + pet_sex)
-                new_texts.append('What would you like to name your pet?')
 
+                new_texts.append('What would you like to name your pet?')
                 new_texts_str = '$'.join(new_texts)
-                requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                 if( len(input) > n ):
 
@@ -430,10 +429,10 @@ class Witch:
                     debug_functions.debugVariable('pet_name', pet_name)
 
                     new_texts.append('Your answer: ' + pet_name)
-                    new_texts.append('How old would you prefer your pet to be?')
 
+                    new_texts.append('How old would you prefer your pet to be?')
                     new_texts_str = '$'.join(new_texts)
-                    requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                    requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                     if( len(input) > n ):
 
@@ -444,10 +443,10 @@ class Witch:
                         debug_functions.debugVariable('pet_age', pet_age)
 
                         new_texts.append('Your answer: ' + pet_age)
-                        new_texts.append('What color would you prefer your pet to be?')
 
+                        new_texts.append('What color would you prefer your pet to be?')
                         new_texts_str = '$'.join(new_texts)
-                        requests.put(url='http://localhost:5003/update_game', json={'texts': new_texts_str})
+                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
 
                         if( len(input) > n ):
 
@@ -472,6 +471,7 @@ class Witch:
 
                             else:
                                 new_texts.append('There are no pets of this kind for adoption.')
+
                                 pet = None
 
                             if pet is not None:

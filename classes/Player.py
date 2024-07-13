@@ -52,4 +52,4 @@ class Player:
         """Greets the player by name."""
         debug_functions.debugMethod(self)
 
-        return f"\nGreetings, {self.get_name()}!"
+        return f"Greetings, {self.get_name()}!"
