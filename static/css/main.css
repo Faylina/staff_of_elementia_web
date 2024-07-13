@@ -105,6 +105,25 @@ label {
 }
 
 
+/********** RESTART BUTTON ***********/
+
+.restart {
+	background-color: #3A7563;
+	color: #b7cac2;
+	border-radius: 10px;
+	border: 1px solid grey;
+	margin-bottom: 60px;
+	padding: 10px 20px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.restart:hover {
+	background-color: #b7cac2;
+	color: #3A7563;
+}
+
+
 /********** LINK TO THE CODING SORCERESS ***********/
 
 body .coding-sorceress {

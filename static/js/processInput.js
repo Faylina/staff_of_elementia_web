@@ -4,8 +4,9 @@ const init = () => {
 
 	/************* VARIABLES *************/
 	
-	const inputForm = document.querySelector('.input');
-	let sse 		= new EventSource("/update_game");
+	const inputForm 	= document.querySelector('.input');
+	const restartButton = document.querySelector('.restart');
+	let sse 			= new EventSource("/update_game");
 
 
 	/************* FUNCTIONS *************/
@@ -83,12 +84,32 @@ const init = () => {
 
 		// scroll to bottom of text box
 		textContainer.scrollTop = textContainer.scrollHeight;
+
+	}
+
+	/**
+	 * 
+	 * This function closes the SSE connection and refreshes the
+	 * page, effectively restarting the game.
+	 * 
+	 * @param 	{EventSource}  sse - the SSE connection
+	 * 
+	 * @returns {null}
+	 * 
+	 */
+	
+	const restartGame = (sse) => {
+
+		sse.close();
+		location.reload();
 	}
 
 
 	/************* EVENT LISTENERS *************/
 
 	inputForm.addEventListener('submit', sendInput);
+	restartButton.addEventListener('click', () => {restartGame(sse)});
+
 	sse.addEventListener('open', () => {console.log('Connected')});
 	sse.addEventListener('message', message => {updateText(message)});
 	sse.addEventListener('error', error => {console.log("An error occurred while attempting to connect.")});
