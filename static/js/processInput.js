@@ -63,7 +63,7 @@ const init = () => {
 
 	const updateText = (texts) => {
 
-		console.log('Updating client...');
+		// console.log('Updating client...');
 
 		// get data from server and transform from string to array
 		const textsString = texts.data;
@@ -97,7 +97,7 @@ const init = () => {
 	 * @returns {null}
 	 * 
 	 */
-	
+
 	const restartGame = (sse) => {
 
 		sse.close();
@@ -110,9 +110,9 @@ const init = () => {
 	inputForm.addEventListener('submit', sendInput);
 	restartButton.addEventListener('click', () => {restartGame(sse)});
 
-	sse.addEventListener('open', () => {console.log('Connected')});
+	// sse.addEventListener('open', () => {console.log('Connected')});
 	sse.addEventListener('message', message => {updateText(message)});
-	sse.addEventListener('error', error => {console.log("An error occurred while attempting to connect.")});
+	// sse.addEventListener('error', error => {console.log("An error occurred while attempting to connect.")});
 
 }
 

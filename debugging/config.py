@@ -4,4 +4,4 @@
 
 #---------- VARIABLES ------------------#
 
-DEBUG = True
+DEBUG = False

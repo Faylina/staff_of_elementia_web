@@ -81,13 +81,9 @@ def input():
 		try:
 			debug_functions.debugProcess('Processing input...')
 
-			print(player_input)
-
 			# add user input to game
 			player_input.append(request.data.decode("utf-8"))
 			debug_functions.debugVariable('player_input', player_input)
-
-			print(player_input)
 
 			# play game with the added user input
 			play_game(player_input)
@@ -219,5 +215,5 @@ def get_ip():
 #------------ START SERVER ----------------#
 
 if __name__ == "__main__":
-	app.run(host="127.0.0.1", port=5003, debug=True)
+	app.run(host="127.0.0.1", port=5003, debug=False)
 

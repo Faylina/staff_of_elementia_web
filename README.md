@@ -1,6 +1,6 @@
 # Staff of Elementia
 Project written in Python featuring a text-based, object-oriented adventure game. 
-This is the web version and runs with Flask and SocketIO.
+This is the web version and runs with Flask and Server-Sent Events.
 
 # ----- Vision for the game ----- #
 
