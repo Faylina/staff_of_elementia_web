@@ -4,4 +4,5 @@
 
 #---------- VARIABLES ------------------#
 
-DEBUG = False
+DEBUG 	= False
+PORT 	= 5003

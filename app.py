@@ -4,15 +4,20 @@
 
 #------------ IMPORTS ------------------#
 
+from gevent.pywsgi 		import WSGIServer
+from gevent 			import monkey
+monkey.patch_all()
+
 from flask 				import Flask, render_template, request, jsonify, Response
 from Cryptodome.Cipher 	import AES
+
 import binascii
 import time
 
-from index			import play_game
-from texts  		import gameplay_snippets
-from keys.key 		import key
-from debugging      import debug_functions
+from index				import play_game
+from texts  			import gameplay_snippets
+from keys.key 			import key
+from debugging      	import debug_functions, config
 
 
 #------------ VARIABLES ----------------#
@@ -64,7 +69,6 @@ def index():
 		try:
 			debug_functions.debugProcess('Starting the game...')
 
-
 			play_game(player_input)
 
 			return render_template('index.html', texts=intro_texts)
@@ -92,6 +96,7 @@ def input():
 		
 		except:
 			print('User input could not be passed to the game...')
+			return jsonify({'message': 'User input could not be passed to the game...'})
 
 
 # >>> receives new text from game script
@@ -132,19 +137,24 @@ def update_game():
 				while True:
 					if check_for_update() == True:
 
-						# find the latest text
-						index = len(texts) - 1
+						try:
 
-						# update comparison variable for update checks
-						old_texts.append(texts[index])
+							# find the latest text
+							index = len(texts) - 1
 
-						# send latest text to frontend
-						yield f"event: message\ndata: {texts[index]}\n\n"
+							# update comparison variable for update checks
+							old_texts.append(texts[index])
+
+							# send latest text to frontend
+							yield f"event: message\ndata: {texts[index]}\n\n"
+
+						except:
+							print('Update could not be sent.')
 					else:
 						# debug_functions.debugProcess('No update...')
 						placeholder = 1
 
-					# time.sleep(0.1)
+					time.sleep(0.5)
 			
 			return Response(fetch_texts(), mimetype="text/event-stream")
 		
@@ -215,5 +225,5 @@ def get_ip():
 #------------ START SERVER ----------------#
 
 if __name__ == "__main__":
-	app.run(host="127.0.0.1", port=5003, debug=False)
+	WSGIServer(('', config.PORT), app).serve_forever()
 
