@@ -179,7 +179,8 @@ def get_cookie():
 	cipher 			= AES.new(shared_secret, AES.MODE_CBC, iv=cookie_data[:16])
 	decrypted_data 	= cipher.decrypt(cookie_data[16:])
 
-	decrypted_cookie = decrypted_data.decode('utf-8').strip()
+	decrypted_cookie_list 	= decrypted_data.decode('utf-8').strip().split("\\")
+	decrypted_cookie 		= decrypted_cookie_list[0]
 	 
 	return decrypted_cookie
 
