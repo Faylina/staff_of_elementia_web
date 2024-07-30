@@ -41,9 +41,6 @@ const checkLogin = () => {
 	.then(([bridgeCookie, IP]) => { 
 
 		if (bridgeCookie.data !== "Cookie not found") {
-
-			console.log(bridgeCookie.data);
-			console.log(IP.data);
 			
 			if(bridgeCookie.data === IP.data) { 
 				console.log('User is logged in.'); 
@@ -57,7 +54,7 @@ const checkLogin = () => {
 				.catch(console.warn)
 			}
 		} else {
-			//location.href = '../../index.php';
+			location.href = '../../index.php';
 		}
 	}).catch(error => { console.error('Error fetching data:', error); });
 }
