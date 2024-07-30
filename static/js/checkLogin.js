@@ -41,8 +41,11 @@ const checkLogin = () => {
 	.then(([bridgeCookie, IP]) => { 
 
 		if (bridgeCookie.data !== "Cookie not found") {
+
+			const lengthIP 	= IP.data.length;
+			const data 		= bridgeCookie.data.slice(0, lengthIP);
 			
-			if(bridgeCookie.data === IP.data) { 
+			if(data === IP.data) { 
 				console.log('User is logged in.'); 
 			} else { 
 				console.log('User is not logged in.'); 
