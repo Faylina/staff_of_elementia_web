@@ -72,8 +72,10 @@ def index():
 			play_game(player_input)
 
 			return render_template('index.html', texts=intro_texts)
-		except:
+		
+		except Exception as e:
 			print('Homepage could not be loaded...')
+			return jsonify({'message': f"Homepage could not be loaded: {e}"})
 
 
 # >>> receives user input and passes it to the game script
@@ -94,9 +96,9 @@ def input():
 
 			return jsonify({'message': 'User input has been passed to game script.'})
 		
-		except:
+		except Exception as e:
 			print('User input could not be passed to the game...')
-			return jsonify({'message': 'User input could not be passed to the game...'})
+			return jsonify({'message': f"User input could not be passed to the game: {e}"})
 
 
 # >>> receives new text from game script
@@ -117,8 +119,9 @@ def receive_text():
 
 			return jsonify({'message': 'New texts received from game script.'})
 		
-		except:
+		except Exception as e:
 			print('New text has not been received...')
+			return jsonify({'message': f"New text has not been received: {e}"})
 
 
 # >>> pushes game updates via SSE to update the frontend
@@ -158,8 +161,9 @@ def update_game():
 			
 			return Response(fetch_texts(), mimetype="text/event-stream")
 		
-		except:
+		except Exception as e:
 			print('Update could not be sent to frontend...')
+			return jsonify({'message': f"Update could not be sent to frontend: {e}"})
 
 
 # >>> fetches and decrypts cookie for authentication
