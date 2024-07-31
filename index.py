@@ -7,7 +7,7 @@
 
 #---------- IMPORTS -----------#
 
-from debugging          import debug_functions
+from debugging          import debug_functions, config
 from texts              import gameplay_snippets
 from classes.Game       import Game
 from classes.Player     import Player
@@ -48,7 +48,7 @@ def play_game(player_input):
         if confirmation != 'y':
             new_texts.append('Farewell, traveler. Come back when you are ready to tackle this challenge.')
             new_texts_str = '$'.join(new_texts)
-            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
+            requests.put(url=config.URL, json={'texts': new_texts_str})   
     
         else:
  
@@ -56,7 +56,7 @@ def play_game(player_input):
 
             new_texts.append('Then state your name, brave traveler!')
             new_texts_str = '$'.join(new_texts)
-            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+            requests.put(url=config.URL, json={'texts': new_texts_str})
 
             if( len(input) > n ):
 
@@ -81,7 +81,7 @@ def play_game(player_input):
 
                 new_texts.append('Are you ready to start a new adventure? (y/n)')
                 new_texts_str = '$'.join(new_texts)
-                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
+                requests.put(url=config.URL, json={'texts': new_texts_str})   
 
                 if( len(input) > n ):
 
@@ -97,7 +97,7 @@ def play_game(player_input):
 
                         new_texts.append(f"Farewell, {player_name}. Come back when you're ready to tackle this challenge.")
                         new_texts_str = '$'.join(new_texts)
-                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                        requests.put(url=config.URL, json={'texts': new_texts_str})
 
                     else:
 
@@ -124,7 +124,7 @@ def play_game(player_input):
 
                         new_texts.append("What would you like to be called as a witch?")
                         new_texts_str = '$'.join(new_texts)
-                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
+                        requests.put(url=config.URL, json={'texts': new_texts_str})   
 
                         if( len(input) > n ):
                         
@@ -136,7 +136,7 @@ def play_game(player_input):
 
                             new_texts.append('Would you like to adopt a pet? (y/n)')
                             new_texts_str = '$'.join(new_texts)
-                            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                            requests.put(url=config.URL, json={'texts': new_texts_str})
 
                             if( len(input) > n ):
 
@@ -197,7 +197,7 @@ def play_game(player_input):
 
                                 new_texts.append('Would you like to enter the forest now? (y/n)')
                                 new_texts_str = '$'.join(new_texts)
-                                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                requests.put(url=config.URL, json={'texts': new_texts_str})
 
                                 if( len(input) > n ):
 
@@ -211,7 +211,7 @@ def play_game(player_input):
 
                                         new_texts.append(f"Goodbye, {player_name}. Come back when you're ready to tackle this challenge.")
                                         new_texts_str = '$'.join(new_texts)
-                                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                        requests.put(url=config.URL, json={'texts': new_texts_str})
                         
                                     else:
 
@@ -226,7 +226,7 @@ def play_game(player_input):
 
                                             new_texts.append('Enter any letter to see your current options.')
                                             new_texts_str = '$'.join(new_texts)
-                                            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                            requests.put(url=config.URL, json={'texts': new_texts_str})
 
                                             if( len(input) > n ):
 
@@ -251,7 +251,7 @@ def play_game(player_input):
                                                     
                                                     new_texts.append('Choose wisely: ')
                                                     new_texts_str = '$'.join(new_texts)
-                                                    requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})   
+                                                    requests.put(url=config.URL, json={'texts': new_texts_str})   
 
                                                     if( len(input) > n ):
 
@@ -271,7 +271,7 @@ def play_game(player_input):
 
                                                     new_texts.append('Choose wisely: ')
                                                     new_texts_str = '$'.join(new_texts)
-                                                    requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                                    requests.put(url=config.URL, json={'texts': new_texts_str})
 
                                                     if( len(input) > n ):   
                                                         action = input[n]      
@@ -303,7 +303,7 @@ def play_game(player_input):
 
                                                         new_texts.append(f"Goodbye, {player_name}. Come back when you're ready to continue.")
                                                         new_texts_str = '$'.join(new_texts)
-                                                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                                        requests.put(url=config.URL, json={'texts': new_texts_str})
 
                                                     # ---------- PRESENT PET OPTIONS ---------#
 
@@ -316,7 +316,7 @@ def play_game(player_input):
                                                         
                                                         new_texts.append('Choose interaction: ')
                                                         new_texts_str = '$'.join(new_texts)
-                                                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                                        requests.put(url=config.URL, json={'texts': new_texts_str})
 
                                                         if( len(input) > n ):
 
@@ -337,7 +337,7 @@ def play_game(player_input):
 
                                                                 new_texts.append(f"Goodbye, {player_name}. Come back when you're ready to continue.")
                                                                 new_texts_str = '$'.join(new_texts)
-                                                                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                                                                requests.put(url=config.URL, json={'texts': new_texts_str})
 
                                                             # ---------- PET INTERACTIONS ---------#
                                                             else:

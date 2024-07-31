@@ -6,7 +6,7 @@
 
 #---------- IMPORTS -----------#
 
-from debugging          import debug_functions
+from debugging          import debug_functions, config
 from classes.Pouch      import Pouch
 from classes.Spellbook  import Spellbook
 from classes.Cat        import Cat
@@ -390,7 +390,7 @@ class Witch:
         
         new_texts.append('What kind of pet would you like to adopt? (cat/dog)')
         new_texts_str = '$'.join(new_texts)
-        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+        requests.put(url=config.URL, json={'texts': new_texts_str})
 
         if( len(input) > n ):
 
@@ -404,7 +404,7 @@ class Witch:
 
             new_texts.append('What would you like the sex of your pet to be? (male/female)')
             new_texts_str = '$'.join(new_texts)
-            requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+            requests.put(url=config.URL, json={'texts': new_texts_str})
 
             if( len(input) > n ):
 
@@ -418,7 +418,7 @@ class Witch:
 
                 new_texts.append('What would you like to name your pet?')
                 new_texts_str = '$'.join(new_texts)
-                requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                requests.put(url=config.URL, json={'texts': new_texts_str})
 
                 if( len(input) > n ):
 
@@ -432,7 +432,7 @@ class Witch:
 
                     new_texts.append('How old would you prefer your pet to be?')
                     new_texts_str = '$'.join(new_texts)
-                    requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                    requests.put(url=config.URL, json={'texts': new_texts_str})
 
                     if( len(input) > n ):
 
@@ -446,7 +446,7 @@ class Witch:
 
                         new_texts.append('What color would you prefer your pet to be?')
                         new_texts_str = '$'.join(new_texts)
-                        requests.put(url='http://localhost:5003/receive_text', json={'texts': new_texts_str})
+                        requests.put(url=config.URL, json={'texts': new_texts_str})
 
                         if( len(input) > n ):
 
