@@ -94,10 +94,13 @@ def input():
 			# play game with the added user input
 			play_game(player_input)
 
+			open('route_log.txt', 'a').write('\nUser input has been passed to game script.')
+
 			return jsonify({'message': 'User input has been passed to game script.'})
 		
 		except Exception as e:
 			print('User input could not be passed to the game...')
+			open('route_log.txt', 'a').write('\nUser input could not be passed to the game...')
 			return jsonify({'message': f"User input could not be passed to the game: {e}"})
 
 
@@ -117,10 +120,13 @@ def receive_text():
 
 			debug_functions.debugVariable('texts', texts)
 
+			open('route_log.txt', 'a').write('\nNew texts received from game script.')
+
 			return jsonify({'message': 'New texts received from game script.'})
 		
 		except Exception as e:
 			print('New text has not been received...')
+			open('route_log.txt', 'a').write('\nNew text has not been received...')
 			return jsonify({'message': f"New text has not been received: {e}"})
 
 
@@ -148,11 +154,15 @@ def update_game():
 							# update comparison variable for update checks
 							old_texts.append(texts[index])
 
+							open('route_log.txt', 'a').write('\nUpdate has been sent.')
+
 							# send latest text to frontend
 							yield f"event: message\ndata: {texts[index]}\n\n"
 
-						except:
+						except Exception as e:
 							print('Update could not be sent.')
+							open('route_log.txt', 'a').write('\nUpdate could not be sent.')
+							return jsonify({'message': f"Update could not be sent: {e}"})
 					else:
 						# debug_functions.debugProcess('No update...')
 						placeholder = 1
@@ -163,6 +173,7 @@ def update_game():
 		
 		except Exception as e:
 			print('Update could not be sent to frontend...')
+			open('route_log.txt', 'a').write('\nUpdate could not be sent to frontend...')
 			return jsonify({'message': f"Update could not be sent to frontend: {e}"})
 
 
