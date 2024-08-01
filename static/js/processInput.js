@@ -109,14 +109,10 @@ const init = () => {
 	inputForm.addEventListener('submit', sendInput);
 	restartButton.addEventListener('click', () => {restartGame(sse)});
 
-	sse.addEventListener('open', () => {console.log('Connected')});
+	// sse.addEventListener('open', () => {console.log('Connected')});
 	sse.addEventListener('update', message => {updateText(message)});
 	sse.addEventListener('heartbeat', () => {console.log('heartbeat')});
-	sse.addEventListener('error', error => {console.log("SSE error:", error)});
-	sse.addEventListener('close', () => {
-		console.log('Closing connection.');
-		sse.close();
-	})
+	// sse.addEventListener('error', error => {console.log("SSE error:", error)});
 
 }
 

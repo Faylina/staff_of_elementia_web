@@ -154,18 +154,17 @@ def update_game():
 							# update comparison variable for update checks
 							old_texts.append(texts[index])
 
-							open('route_log.txt', 'a').write('\nUpdate has been sent.')
+							#open('route_log.txt', 'a').write('\nUpdate has been sent.')
 
 							# send latest text to frontend
 							yield f"event: update\ndata: {texts[index]}\n\n"
 
 						except Exception as e:
-							print('Update could not be sent.')
-							open('route_log.txt', 'a').write('\nUpdate could not be sent.')
+							# print('Update could not be sent.')
+							# open('route_log.txt', 'a').write('\nUpdate could not be sent.')
 							return jsonify({'message': f"Update could not be sent: {e}"})
 					else:
 						# debug_functions.debugProcess('No update...')
-						#placeholder = 1
 						yield f"event: heartbeat\ndata:\n\n"
 
 					time.sleep(0.5)
@@ -173,8 +172,8 @@ def update_game():
 			return Response(fetch_texts(), mimetype="text/event-stream")
 		
 		except Exception as e:
-			print('Update could not be sent to frontend...')
-			open('route_log.txt', 'a').write('\nUpdate could not be sent to frontend...')
+			# print('Update could not be sent to frontend...')
+			# open('route_log.txt', 'a').write('\nUpdate could not be sent to frontend...')
 			return jsonify({'message': f"Update could not be sent to frontend: {e}"})
 
 
