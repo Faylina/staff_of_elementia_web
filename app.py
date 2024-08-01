@@ -157,7 +157,7 @@ def update_game():
 							open('route_log.txt', 'a').write('\nUpdate has been sent.')
 
 							# send latest text to frontend
-							yield f"event: message\ndata: {texts[index]}\n\n"
+							yield f"event: update\ndata: {texts[index]}\n\n"
 
 						except Exception as e:
 							print('Update could not be sent.')
@@ -165,7 +165,8 @@ def update_game():
 							return jsonify({'message': f"Update could not be sent: {e}"})
 					else:
 						# debug_functions.debugProcess('No update...')
-						placeholder = 1
+						#placeholder = 1
+						yield f"event: heartbeat\ndata:\n\n"
 
 					time.sleep(0.5)
 			
