@@ -44,8 +44,10 @@ const checkLogin = () => {
 
 			const lengthIP 	= IP.data.length;
 			const data 		= bridgeCookie.data.slice(0, lengthIP);
+
+			const cookie = data.replaceAll('RP', ':');
 			
-			if(data === IP.data) { 
+			if(cookie === IP.data) { 
 				console.log('User is logged in.'); 
 			} else { 
 				console.log('User is not logged in.'); 
